@@ -1,8 +1,8 @@
 import base64
 import tempfile
 from pathlib import Path
-
 import streamlit as st
+import tabula
 
 def main():
     selected_box = st.sidebar.selectbox(
@@ -32,7 +32,28 @@ def write_pdf(file_path):
     st.markdown(pdf_display, unsafe_allow_html=True)
 
 def pdf_convert():
-    pass
+    st.title("PDF表変換ツール")
+    st.header("PDFにある表をCSVファイルに変換します")
+    uploaded_file = st.file_uploader("Choose your .odf file", type="pdf")
+
+    if uploaded_file is not None:
+        file_name = uploaded_file.name
+        dfs = tabula.read_pdf(uploaded_file, stream=True, pages='all')
+        csv_files = []
+        for idx, df in enumerate(dfs):
+            csv_file_name = file_name[:-4] + str(idx) + ".csv"
+            csv_file = df.to_csv().encode('utf-8')
+            csv_files.append((csv_file_name, csv_file))
+            st.table(df)
+
+        for csv_file_name, csv in csv_files:
+            st.download_button(
+                label="Download data as CSV",
+                data=csv,
+                file_name=csv_file_name,
+                mime='text/csv',
+            )
+
 
 if __name__ == '__main__':
     main()

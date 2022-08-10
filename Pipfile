@@ -4,13 +4,13 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-tabula = "*"
 numpy = "*"
 matplotlib = "*"
 streamlit = "*"
 streamlit-webrtc = "*"
 pandas = "*"
 pdf2image = "*"
+tabula-py = "*"
 
 [dev-packages]
 

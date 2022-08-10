@@ -11,6 +11,8 @@ def main():
     )
     if selected_box == 'PDF閲覧':
         pdf_show()
+    if selected_box == 'PDF表変換':
+        pdf_convert()
 
 def pdf_show():
     st.title("PDF閲覧ツール")
@@ -21,13 +23,16 @@ def pdf_show():
             st.markdown("## Original PDF file")
             fp = Path(tmp_file.name)
             fp.write_bytes(uploaded_file.getvalue())
-            st.write(show_pdf(tmp_file.name))
+            st.write(write_pdf(tmp_file.name))
 
-def show_pdf(file_path):
+def write_pdf(file_path):
     with open(file_path, "rb") as f:
         base64_pdf = base64.b64encode(f.read()).decode("utf-8")
     pdf_display = f'<embed src="data:application/pdf;base64,{base64_pdf}" width="100%" height="1000" type="application/pdf">'
     st.markdown(pdf_display, unsafe_allow_html=True)
+
+def pdf_convert():
+    pass
 
 if __name__ == '__main__':
     main()

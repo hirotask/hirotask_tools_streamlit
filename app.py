@@ -7,7 +7,7 @@ import tabula
 def main():
     selected_box = st.sidebar.selectbox(
         'Choose one of the following',
-        ("PDF表変換", 'FaceMesh', 'Image Processing', 'Graph', 'Map')
+        ("PDF閲覧", 'PDF表変換')
     )
     if selected_box == 'PDF閲覧':
         pdf_show()
